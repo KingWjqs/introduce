@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+        }
+
+        .container {
+            height: 100%;
+            background-image: linear-gradient(to right, #fbc2eb, #a6c1ee);
+        }
+
+        .login-wrapper {
+            background-color: #fff;
+            width: 358px;
+            height: 588px;
+            border-radius: 15px;
+            padding: 0 50px;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .header {
+            font-size: 38px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 200px;
+        }
+
+        .input-item {
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 0;
+            padding: 10px;
+            border-bottom: 1px solid rgb(128, 125, 125);
+            font-size: 15px;
+            outline: none;
+        }
+
+        .input-item:placeholder {
+            text-transform: uppercase;
+        }
+
+        .btn {
+            cursor: pointer;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            margin-top: 40px;
+            background-image: linear-gradient(to right, #a6c1ee, #fbc2eb);
+            color: #fff;
+        }
+
+        .msg {
+            text-align: center;
+            line-height: 88px;
+        }
+
+        a {
+            text-decoration-line: none;
+            color: #abc1ee;
+        }
+
+        #warn {
+            color: red;
+            font-size: 13px;
+            position: relative;
+            left: 100px;
+            top: -30px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="login-wrapper">
+            <div class="header">注册</div>
+            <p id="warn"></p>
+            <form class="form-wrapper">
+                <input type="text" name="username" placeholder="请输入用户名" class="input-item">
+                <input type="password" name="password" placeholder="请输入密码" class="input-item">
+                <input type="password" name="repassword" placeholder="请再次输入密码" class="input-item">
+                <div class="btn">注册</div>
+            </form>
+            <div class="msg">
+                已有账号?
+                <a href="./login.html">立即登录</a>
+            </div>
+        </div>
+    </div>
+    <script src="../lib/form-serialize.js"></script>
+    <script src="../lib/axios.js"></script>
+    <script>
+        axios.defaults.baseURL = 'https://hmajax.itheima.net'
+        const btn = document.querySelector(".btn");
+        const warn = document.querySelector("#warn");
+        const formWrapper = document.querySelector(".form-wrapper");
+        function renderWarn(info) {
+            warn.style.display = "block";
+            warn.innerText = info;
+        }
+
+        btn.addEventListener('click', async function (e) {
+            const data = serialize(formWrapper, { hash: true, empty: true })
+            if (!data.username || !data.password || !data.repassword) {
+                renderWarn("用户名或密码不能为空")
+                return;
+            }
+            if (data.password !== data.repassword) {
+                renderWarn("两次输入的密码不一致")
+                return;
+            }
+            warn.style.display = "none";
+            try {
+                const registerData = await axios.post("/register", data)
+                if (registerData.data.code === 10003 || registerData.data.code === 10002) {
+                    renderWarn(registerData.data.message)
+                    return;
+                }
+                warn.style.display = "none";
+                location.href = "./login.html";
+            } catch (err) {
+                renderWarn(err.response.data.message)
+                return;
+            }
+        })
+    </script>
+</body>
+
+</html>

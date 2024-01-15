@@ -24,9 +24,9 @@
 
 
     <div class="yinyue">
-        <img class="music" src="../sun.webp" alt="">
+        <img class="music" src="./img/sun.webp" alt="">
         <audio autoplay="autoplay" id="audio" loop="loop">
-            <source src="./music1.mp3" type="audio/MP3">
+            <source src="#" type="audio/MP3">
 
         </audio>
 
@@ -106,12 +106,12 @@
     <button class="bt" onclick="window.open('https://blog.csdn.net/king_dog1213')">MY CSDN BLOG</button>
 
     <script>
-        let mucics = document.getElementById('audio')
+        /* let mucics = document.getElementById('audio')
         document.body.addEventListener('mousemove', function () {
             setTimeout(() => {
                 mucics.play();
             }, 2000);
-        }, false);
+        }, false); */
     </script>
 
     <div class="footer">
@@ -119,12 +119,11 @@
         <!-- <p>希望能成为有梦想 有温度的教技人</p><br />
         <p>你好 我是风小风</p><br /> -->
     </div>
-    <script src="../lib/axios.js"></script>
+    <script src="./lib/axios.js"></script>
     <script>
         if (!JSON.parse(localStorage.getItem('workuser'))){
             location.href = './login.html'
         }
-        //鼠标点击出现爱心特效  这部分特效是从一个网页搬过来的  觉得挺好看的
         (function (window, document, undefined) {
             var hearts = [];
             window.requestAnimationFrame = (function () {

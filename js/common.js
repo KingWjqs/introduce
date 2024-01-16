@@ -6,16 +6,18 @@ axios.interceptors.request.use((req) => {
     }
     return req
 }, (err) => {
-    return Promise.reject(err)
+    return err
 })
 axios.interceptors.response.use((res) => {
     return res
 }, (err) => {
-    if (err.response.data.message === "token验证失败") {
-        localStorage.removeItem('workuser')
-        setTimeout(() => {
-            location.href = 'login.html'
-        }, 2000);
+    if (localStorage.getItem('workuser')) {
+        if (err.response.data.message === "token验证失败") {
+            localStorage.removeItem('workuser')
+            setTimeout(() => {
+                location.href = 'login.html'
+            }, 2000);
+        }
     }
     return Promise.reject(err)
 })

@@ -120,10 +120,12 @@
         <p>你好 我是风小风</p><br /> -->
     </div>
     <script src="./lib/axios.js"></script>
+    <script src="./js/common.js"></script>
     <script>
         if (!JSON.parse(localStorage.getItem('workuser'))){
             location.href = './login.html'
         }
+        axios.get("/dashboard").then(res=>{console.log(res);})
         (function (window, document, undefined) {
             var hearts = [];
             window.requestAnimationFrame = (function () {

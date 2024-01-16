@@ -95,8 +95,8 @@
     </div>
     <script src="./lib/axios.js"></script>
     <script src="./lib/form-serialize.js"></script>
+    <script src="./js/common.js"></script>
     <script>
-        axios.defaults.baseURL = 'https://hmajax.itheima.net'
         const btn = document.querySelector(".btn");
         const warn = document.querySelector("#warn");
         const formWrapper = document.querySelector(".form-wrapper");
@@ -113,7 +113,7 @@
             warn.style.display = "none";
             try {
                 const loginData = await axios.post("/login", data)
-                console.log(loginData);
+                console.dir(loginData);
                 if (loginData.data.code === "10004") {
                     renderWarn("用户名长度必须大于8,密码长度必须大于6")
                     return;
